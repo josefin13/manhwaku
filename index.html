@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManhwaKu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #1b3b77;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #3b5998;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #2b4777;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .manhwa-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .manhwa-item {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .manhwa-item img {
+            width: 200px;
+            height: auto;
+        }
+
+        .manhwa-item .info {
+            padding: 10px;
+        }
+
+        .manhwa-item a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            width: 100%;
+        }
+
+        .manhwa-item a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .manhwa-item h3 {
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+
+        .manhwa-item p {
+            font-size: 1em;
+            margin-bottom: 2px;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 20px;
+            color: #888;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ManhwaKu</h1>
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="genre.html">Genre</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Cari manhwa..." oninput="searchManhwa()">
+        </div>
+        <div class="manhwa-list" id="manhwa-list">
+            <!-- List manhwa akan dimasukkan melalui JavaScript -->
+        </div>
+        <div id="no-results-message" class="no-results" style="display: none;">
+            Tidak ada manhwa yang sesuai dengan pencarian Anda.
+        </div>
+    </div>
+
+    <script>
+        // Data manhwa untuk simulasi
+        const manhwaData = [
+            {
+                id: 1,
+                image: "assets/images/karya1.jpg",
+                title: "Merry Marbling",
+                genre: "Comedy",
+                status: "Ongoing",
+                translator: "Yuda Al' Hadid",
+                sinopsis: "Berkisah tentang 4 remaja sekolah. dimana awal kisah di mualai ketika tahun pertama. anak yang bertubuh lemah tidak masuk kelas di tahun ajaran baru untuk waktu yang lama ketika masuk ia dalam keadaan lemah karna sakit, di koridor iya bertemu dengan malaikat sekolah bernama ian dan di sinilah kisah mereka di mulai",
+                year: 2022
+            },
+            {
+                id: 2,
+                image: "assets/images/karya2.jpg",
+                title: "Meryy Marbling S2",
+                genre: "Comedy",
+                status: "Ongoing",
+                translator: "Yuda Al'hadid",
+                sinopsis: "Lanjutan Manhwa musim ke 2 Merry Marbling",
+                year: 2024
+            }
+        ];
+
+        // Fungsi untuk menampilkan daftar manhwa
+        function renderManhwaList(filteredManhwaData) {
+            const manhwaListContainer = document.getElementById('manhwa-list');
+            const noResultsMessage = document.getElementById('no-results-message');
+            
+            manhwaListContainer.innerHTML = '';  // Kosongkan list sebelum menambahkan data baru
+
+            if (filteredManhwaData.length === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+                filteredManhwaData.forEach(manhwa => {
+                    const manhwaItem = document.createElement('div');
+                    manhwaItem.className = 'manhwa-item';
+                    manhwaItem.innerHTML = `
+                        <a href="detail.html?id=${manhwa.id}">
+                            <img src="${manhwa.image}" alt="Cover of ${manhwa.title}">
+                            <div class="info">
+                                <h3>${manhwa.title}</h3>
+                                <p><strong>Tahun Terbit:</strong> ${manhwa.year}</p>
+                                <p><strong>Genre:</strong> ${manhwa.genre}</p>
+                                <p><strong>Status:</strong> ${manhwa.status}</p>
+                                <p><strong>Penerjemah:</strong> ${manhwa.translator}</p>
+                                <p><strong>Sinopsis:</strong> ${manhwa.sinopsis}</p>
+                            </div>
+                        </a>
+                    `;
+                    manhwaListContainer.appendChild(manhwaItem);
+                });
+            }
+        }
+
+        // Fungsi untuk mencari manhwa berdasarkan input
+        function searchManhwa() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            const filteredManhwa = manhwaData.filter(manhwa => {
+                return manhwa.title.toLowerCase().includes(searchQuery) ||
+                    manhwa.genre.toLowerCase().includes(searchQuery) ||
+                    manhwa.status.toLowerCase().includes(searchQuery) ||
+                    manhwa.translator.toLowerCase().includes(searchQuery);
+            });
+            renderManhwaList(filteredManhwa);
+        }
+        // Inisialisasi dengan menampilkan seluruh manhwa
+        renderManhwaList(manhwaData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManhwaKu - Genre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #1b3b77;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #3b5998;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #2b4777;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .genre-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .genre-item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .genre-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .genre-item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #1b3b77;
+        }
+
+        .genre-item p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .manhwa-list {
+            margin-top: 30px;
+            display: none;
+            text-align: left;
+        }
+
+        .manhwa-item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .manhwa-item h3 {
+            margin: 0;
+            color: #1b3b77;
+        }
+
+        .manhwa-item p {
+            margin: 5px 0 0;
+            color: #666;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1b3b77;
+            color: white;
+            text-align: center;
+        }
+
+        .genre-item.active {
+            background-color: #87ceeb; /* Warna biru muda */
+            color: white; /* Agar teks tetap terlihat */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ManhwaKu</h1>
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="genre.html">Genre</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Pilih Genre Favoritmu</h2>
+        <ul class="genre-list">
+            <li class="genre-item" onclick="filterManhwa('Action', this)">
+                <h3>Action</h3>
+                <p>Kisah penuh aksi dan adrenalin</p>
+            </li>
+            <li class="genre-item" onclick="filterManhwa('Romance', this)">
+                <h3>Romance</h3>
+                <p>Kisah cinta yang mengharukan</p>
+            </li>
+            <li class="genre-item" onclick="filterManhwa('Drama', this)">
+                <h3>Drama</h3>
+                <p>Konflik yang menyentuh hati</p>
+            </li>
+            <li class="genre-item" onclick="filterManhwa('Fantasy', this)">
+                <h3>Fantasy</h3>
+                <p>Dunia penuh imajinasi</p>
+            </li>
+            <li class="genre-item" onclick="filterManhwa('Comedy', this)">
+                <h3>Comedy</h3>
+                <p>Humor yang menggelitik</p>
+            </li>
+            <li class="genre-item" onclick="filterManhwa('Horror', this)">
+                <h3>Horror</h3>
+                <p>Kisah menegangkan dan misterius</p>
+            </li>
+        </ul>
+        <div class="manhwa-list" id="manhwaList">
+            <!-- Daftar manhwa akan muncul di sini -->
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 ManhwaKu. Semua Hak Dilindungi.
+    </footer>
+
+    <script>
+        const manhwaData = [
+            { id: 1, judul: "Merry Marbling", genre: "Comedy", image: "assets/images/karya1.jpg", status: "Ongoing", translator: "Yuda Al' Hadid", sinopsis: "Berkisah tentang 4 remaja sekolah. dimana awal kisah di mualai ketika tahun pertama. anak yang bertubuh lemah tidak masuk kelas di tahun ajaran baru untuk waktu yang lama ketika masuk ia dalam keadaan lemah karna sakit, di koridor iya bertemu dengan malaikat sekolah bernama ian dan di sinilah kisah mereka di mulai" },
+            { id: 2, judul: "Merry Marbling S2", genre: "Comedy", image: "assets/images/karya2.jpg", status: "Ongoing", translator: "Yuda Al' Hadid", sinopsis: "Lanjutan Manhwa musim ke 2 Merry Marbling" },
+        ];
+
+        // Fungsi untuk memfilter manhwa berdasarkan genre
+        function filterManhwa(genre, element) {
+            const listContainer = document.getElementById('manhwaList');
+            listContainer.innerHTML = ''; // Kosongkan daftar sebelumnya
+            listContainer.style.display = 'block'; // Tampilkan daftar manhwa
+
+            // Menghapus kelas 'active' dari semua genre item
+            const genreItems = document.querySelectorAll('.genre-item');
+            genreItems.forEach(item => item.classList.remove('active'));
+
+            // Menambahkan kelas 'active' pada genre yang dipilih
+            element.classList.add('active');
+
+            // Menyaring manhwa berdasarkan genre
+            const filteredManhwa = manhwaData.filter(manhwa => manhwa.genre === genre);
+
+            if (filteredManhwa.length > 0) {
+                filteredManhwa.forEach(manhwa => {
+                    const item = document.createElement('div');
+                    item.className = 'manhwa-item';
+                    item.innerHTML = `
+                        <a href="detail.html?id=${manhwa.id}">
+                            <h3>${manhwa.judul}</h3>
+                            <p>Genre: ${manhwa.genre}</p>
+                        </a>
+                    `;
+                    listContainer.appendChild(item);
+                });
+            } else {
+                listContainer.innerHTML = '<p>Tidak ada manhwa untuk genre ini.</p>';
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Manhwa</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #1b3b77;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            background-color: #3b5998;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #2b4777;
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .detail img {
+            max-width: 50%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .biodata {
+            margin-bottom: 30px;
+            text-align: left;
+            width: 100%;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .biodata p {
+            margin: 8px 0;
+        }
+
+        .chapter-list {
+            width: 100%;
+        }
+
+        .chapter-list h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #1b3b77;
+        }
+
+        .chapter-list a {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            color: white;
+            background-color: #1b3b77;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .chapter-list a:hover {
+            background-color: #144a9a;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .read-more {
+            color: #1b3b77;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .read-more:hover {
+            color: #144a9a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Detail Karya</h1>
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="genre.html">Genre</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="detail">
+            <img id="manhwa-image" src="" alt="Gambar Karya">
+            <div class="biodata">
+                <p><strong>Judul:</strong> <span id="manhwa-title"></span></p>
+                <p><strong>Genre:</strong> <span id="manhwa-genre"></span></p>
+                <p><strong>Status:</strong> <span id="manhwa-status"></span></p>
+                <p><strong>Penerjemah:</strong> <span id="manhwa-translator"></span></p>
+                <p><strong>Tahun Terbit:</strong> <span id="manhwa-tahunTerbit"></span></p>
+                <p><strong>Sinopsis:</strong> <span id="manhwa-synopsis"></span> <span id="read-more" class="read-more">Baca Selengkapnya</span></p>
+            </div>
+            <div class="chapter-list">
+                <h3>List Chapter</h3>
+                <div id="chapters"></div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 ManhwaKu. Semua Hak Dilindungi.
+    </footer>
+    <script>
+        // Data manhwa (simulasi, bisa diganti dengan data dari server)
+        const manhwaData = {
+            1: {
+                image: "assets/images/karya1.jpg",
+                title: "Merry Marbling",
+                genre: "Comedy",
+                status: "Ongoing",
+                translator: "Yuda Al' Hadid",
+                tahunTerbit: 2022,
+                synopsis: "Berkisah tentang 4 remaja sekolah yang menjalani kehidupan sehari-hari penuh tawa dan masalah yang menarik untuk diikuti.",
+                chapters: [
+                    { name: "Chapter 1", link: "https://drive.google.com/file/d/1yvH2bZMGSG57mxPsuJslEsdvNeepeGVz/view?usp=drive_link" },
+                    { name: "Chapter 2", link: "https://drive.google.com/file/d/1yzcuGp7hRd-VITjYU78ZGBKjfKBJJ0jw/view?usp=drive_link" },
+                    { name: "Chapter 3", link: "https://drive.google.com/file/d/1ypAeu3t-eWQ5XuBrdWEYb5GMsQYonlMz/view?usp=drive_link" },
+                    { name: "Chapter 4", link: "https://drive.google.com/file/d/1z-Ai4BnW1XjuMQEmsvQjaDEChJj59hvm/view?usp=drive_link" },
+                    { name: "Chapter 5", link: "https://drive.google.com/file/d/1yusBZIagcw2u1gxK5NPACfRTuLF_9DDm/view?usp=drive_link" },
+                    { name: "Chapter 6", link: "https://drive.google.com/file/d/1yzgkUM9aCvZFe9luvhVpewM6HUwI0wZe/view?usp=drive_link" },
+                    { name: "Chapter 7", link: "https://drive.google.com/file/d/1yo4RFyz9zmwESQAgCqTUuhU0OG50PGC1/view?usp=drive_link" },
+                    { name: "Chapter 8", link: "https://drive.google.com/file/d/1yyytD-c6NOeB6Z_Gt9S_keS0TAxhESjQ/view?usp=drive_link" },
+                    { name: "Chapter 9", link: "https://drive.google.com/file/d/1ysLvEzSqB8xPe5oIpMDM2a3UpbZEDMgJ/view?usp=drive_link" },
+                    { name: "Chapter 10", link: "https://drive.google.com/file/d/1ysLvEzSqB8xPe5oIpMDM2a3UpbZEDMgJ/view?usp=drive_link" },
+                    { name: "Chapter 11", link: "https://drive.google.com/file/d/1yr_sEdTVYtIN0OVBoXMWLKqkx-CYyn8-/view?usp=drive_link" },
+                    { name: "Chapter 12", link: "https://drive.google.com/file/d/1ywH7uf8nEp1JP1HECAQZzXU8aL8Uh2eN/view?usp=drive_link" },
+                    { name: "Chapter 13", link: "https://drive.google.com/file/d/1ynqa9T3LgDBqpXkze0t9-HTpsBLBs3iN/view?usp=drive_link" },
+                ]
+            },
+            2: {
+                image: "assets/images/karya2.jpg",
+                title: "Merry Marbling S2",
+                genre: "Comedy",
+                status: "Ongoing",
+                translator: "Yuda Al' Hadid",
+                tahunTerbit: 2024,
+                synopsis: "Lanjutan Manhwa musim ke 2 dari Merry Marbling dengan cerita lebih seru dan mendalam akankah kisah mereka berubah menjadi genre lain? baca untuk kisah selengkapnya, support author di blok resminya!.",
+                chapters: [
+                    { name: "Chapter 1", link: "https://drive.google.com/file/d/1ywH7uf8nEp1JP1HECAQZzXU8aL8Uh2eN/view?usp=drive_link" },
+                    { name: "Chapter 2", link: "https://drive.google.com/file/d/1ywXkCF4dPxmu-GNUWnoKyExTlvOPdZER/view?usp=drive_link" },
+                ]
+            }
+        };
+
+        // Ambil parameter ID dari URL
+        const params = new URLSearchParams(window.location.search);
+        const manhwaId = params.get('id');
+
+        // Tampilkan data sesuai ID
+        if (manhwaData[manhwaId]) {
+            const manhwa = manhwaData[manhwaId];
+            document.getElementById('manhwa-image').src = manhwa.image;
+            document.getElementById('manhwa-title').textContent = manhwa.title;
+            document.getElementById('manhwa-genre').textContent = manhwa.genre;
+            document.getElementById('manhwa-status').textContent = manhwa.status;
+            document.getElementById('manhwa-translator').textContent = manhwa.translator;
+            document.getElementById('manhwa-tahunTerbit').textContent = manhwa.tahunTerbit;
+            document.getElementById('manhwa-synopsis').textContent = manhwa.synopsis.slice(0, 50) + '...';
+
+            // Tambahkan list chapter
+            const chaptersContainer = document.getElementById('chapters');
+            manhwa.chapters.forEach(chapter => {
+                const chapterLink = document.createElement('a');
+                chapterLink.href = chapter.link;
+                chapterLink.textContent = chapter.name;
+                chapterLink.target = '_blank';
+                chapterLink.className = 'chapter-link';
+                chaptersContainer.appendChild(chapterLink);
+            });
+
+            // Event untuk baca selengkapnya
+            document.getElementById('read-more').addEventListener('click', () => {
+                document.getElementById('manhwa-synopsis').textContent = manhwa.synopsis;
+                document.getElementById('read-more').style.display = 'none';
+            });
+        } else {
+            document.querySelector('.container').innerHTML = "<p>Manhwa tidak ditemukan.</p>";
+        }
+    </script>
+</body>
+</html>
